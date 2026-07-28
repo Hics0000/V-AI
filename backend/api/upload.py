@@ -52,7 +52,10 @@ async def upload_file(file: UploadFile = File(...)):
     chunks = split_text(text)
 
     # Store chunks in ChromaDB
-    vector_store.add_document(chunks)
+    vector_store.add_document(
+        file.filename,
+        chunks
+    )
 
     # Return success response
     return {

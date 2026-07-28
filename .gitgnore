@@ -38,10 +38,26 @@ build/
 node_modules/
 
 # ChromaDB
-chroma_db/
+data/chroma/
 
 # Uploaded Documents
 data/uploads/
 
 # AI Models
 models/
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Type checker
+.mypy_cache/
+
+# Ruff
+.ruff_cache/
+
+# IDE
+.idea/
+
+# Jupyter
+.ipynb_checkpoints/
