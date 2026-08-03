@@ -6,7 +6,14 @@ class LLM:
     def __init__(self):
         self.model = "llama3.2"
 
-    def ask(self, messages):
+    def ask(self, prompt: str) -> str:
+
+        messages = [
+            {
+                "role": "user",
+                "content": prompt
+            }
+        ]
 
         response = chat(
             model=self.model,
