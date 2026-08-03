@@ -6,16 +6,11 @@ class LLM:
     def __init__(self):
         self.model = "llama3.2"
 
-    def ask(self, question: str) -> str:
+    def ask(self, messages):
 
         response = chat(
             model=self.model,
-            messages=[
-                {
-                    "role": "user",
-                    "content": question
-                }
-            ]
+            messages=messages
         )
 
         return response["message"]["content"]

@@ -1,5 +1,7 @@
+from backend.ai.prompt import SYSTEM_PROMPT
 from backend.ai.llm import llm
 from backend.ai.retriever import retriever
+from backend.memory.memory import memory
 
 
 class RAG:
@@ -8,22 +10,35 @@ class RAG:
 
         context = retriever.retrieve(question)
 
-        prompt = f"""
-You are V.
+        messages = [
+            {
+                "role": "system",
+                "content": SYSTEM_PROMPT
+            }
+        ]
 
-Answer ONLY from the context below.
+        messages.extend(memory.get_history())
 
-If the answer is not present, reply:
-'I don't have information about that.'
+        messages.append(
+            {
+                "role": "system",
+                "content": f"Context:\n{context}"
+            }
+        )
 
-Context:
-{context}
+        messages.append(
+            {
+                "role": "user",
+                "content": question
+            }
+        )
 
-Question:
-{question}
-"""
+        answer = llm.ask(messages)
 
-        return llm.ask(prompt)
+        memory.save_user(question)
+        memory.save_assistant(answer)
+
+        return answer
 
 
 rag = RAG()
